@@ -49,17 +49,22 @@ public class Strategy {
 	public Strategy[] crossover(Strategy s) {
 		Random random = new Random();
 		int seed = random.nextInt(1000) % (weights.length - 2) + 1;
-		Strategy[] newStrageies = new Strategy[2];
-		double[] newWeight1 = new double[weights.length], newWeight2 = new double[weights.length];
+		Strategy[] newStrategies = new Strategy[2];
+		double[] newWeights1 = new double[weights.length], newWeights2 = new double[weights.length];
 
 		for (int i = 0; i < seed; i++) {
-			newWeight1[i] = this.getWeight(i);
-			newWeight2[i] = s.getWeight(i);
+			newWeights1[i] = this.getWeight(i);
+			newWeights2[i] = s.getWeight(i);
 		}
 		for (int i = seed; i < weights.length; i++) {
-			newWeight2[i] = this.getWeight(i);
-			newWeight1[i] = s.getWeight(i);
+			newWeights2[i] = this.getWeight(i);
+			newWeights1[i] = s.getWeight(i);
 		}
+		
+		newStrategies[1] = new Strategy(newWeights1);
+		newStrategies[2] = new Strategy(newWeights2);
+		
+		return newStrategies;
 	}
 
 	/**
