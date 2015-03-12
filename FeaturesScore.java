@@ -15,7 +15,7 @@ public class FeaturesScore {
 		
 		//First 10 are colHeight
 		for (int i = 0; i < COLS; i++) {
-			scores[i] = checkColHeight(i);
+			scores[i] = colHeights[i] = checkColHeight(i);
 		}
 		
 		//The next 9 are adjHeight
