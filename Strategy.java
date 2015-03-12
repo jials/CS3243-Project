@@ -26,7 +26,7 @@ public class Strategy {
 	 * @param state
 	 * @return sigma(weight[i] * score of feature[i])
 	 */
-	public double calculate(State state){
+	public double calculate(Game state){
 		FeaturesScore fs = new FeaturesScore(state);
 		double totalScore = 0.0;
 		
