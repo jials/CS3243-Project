@@ -43,9 +43,17 @@ public class Strategy {
     return null;
   }
 	
-  //TODO: Implement
-  // Normalize this strategy.
+  /**
+   * Normalize the weights, so that sigma(weights) = 1.0
+   */
   public void normalize() {
+	  double sum = 0;
+	  for(int i = 0; i < weights.length; i++) {
+		  sum += weights[i];
+	  }
+	  for(int i = 0; i < weights.length; i++) {
+		  weights[i] = weights[i]/sum;
+	  }
   }
 
   //TODO: Implement
