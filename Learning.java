@@ -6,5 +6,5 @@ public abstract class Learning {
 	
 	protected abstract void store();
 	
-	protected abstract void load();
+	protected abstract boolean load();
 }

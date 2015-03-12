@@ -13,7 +13,18 @@ public class GA extends Learning {
 	 */
 	public GA() {
 		population = new Strategy[NUM_POPULATION];
-		load();
+		if (!load()) {
+			Random rnd = new Random();
+			for (int i = 0; i < NUM_POPULATION; i++) {
+				double[] weights = new double[21];	
+				for (int j = 0; j < 21; j++) {
+					weights[j] = rnd.nextInt();
+				}
+				Strategy s = new Strategy(weights);
+				s.normalize();
+				population[i] = s;
+			}
+		}
 	}
 
 	class ScoredStrategy implements Comparable<ScoredStrategy> {
@@ -74,6 +85,7 @@ public class GA extends Learning {
 	public void store() {
 	}
 
-	public void load() {
+	public boolean load() {
+		return false;
 	}
 }
