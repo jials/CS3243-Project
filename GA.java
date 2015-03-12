@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Collections;
 
 public class GA extends Learning {
-  Strategy[] population;
+	Strategy[] population;
 	private static int NUM_POPULATION = 16;
 	private static int NUM_NEW_POPULATION = 42;
 
