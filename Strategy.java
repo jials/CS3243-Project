@@ -44,8 +44,12 @@ public class Strategy {
 		return weights[index];
 	}
 
-	// TODO: Implement
-	// Returns the two strategies created from crossovers
+	/**
+	 * Crossover two parent strategies: this (first parent) and
+	 * param (second parent) to produce two children strategies.
+	 * @param s: second parent strategy
+	 * @return array of strategy with 2 elements: two children strategies
+	 */
 	public Strategy[] crossover(Strategy s) {
 		Random random = new Random();
 		int seed = random.nextInt(1000) % (weights.length - 2) + 1;
