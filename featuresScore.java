@@ -10,7 +10,7 @@ public class FeaturesScore {
 	
 	private int[] colHeights = new int[COLS];
 	
-	public FeaturesScore(State s) {
+	public FeaturesScore(Game s) {
 		grids = s.getField();
 		
 		//First 10 are colHeight
