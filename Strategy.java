@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Strategy
@@ -36,11 +37,28 @@ public class Strategy {
 		
 		return totalScore;
 	}
+	
+	public double getWeight(int index){
+		return weights[index];
+	}
 
   //TODO: Implement
   // Returns the two strategies created from crossovers
   public Strategy[] crossover(Strategy s) {
-    return null;
+	  Random random = new Random();
+	  int seed = random.nextInt(1000) % (weights.length-2) + 1;
+	  Strategy[] newStrageies = new Strategy[2];
+	  double[] newWeight1 = new double[weights.length],
+			   newWeight2 = new double[weights.length];
+	  
+	  for (int i = 0; i < seed; i++){
+		  newWeight1[i] = this.getWeight(i);
+		  newWeight2[i] = s.getWeight(i);
+	  }
+	  for (int i = seed; i < weights.length; i++){
+		  newWeight2[i] = this.getWeight(i);
+		  newWeight1[i] = s.getWeight(i);
+	  }
   }
 	
   /**
