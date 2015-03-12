@@ -4,10 +4,15 @@ import java.util.List;
 import java.util.Collections;
 public class GA extends Learning {
   Strategy[] population;
+	private static int NUM_POPULATION = 16;
+	private static int NUM_NEW_POPULATION = 42;
+
+
 	/**
 	 * Constructor
 	 */
 	public GA() {
+		population = new Strategy[NUM_POPULATION];
 		load();
 	}
 	
@@ -37,18 +42,18 @@ public class GA extends Learning {
 	 */
 	public void run(int iterations) {
 		Random rnd = new Random();
-    for (int i = 0; i < seed; i++) {
+    for (int i = 0; i < iterations; i++) {
 			List<Strategy> newPopulation = new ArrayList<Strategy>();
-			for (int j = 0; j < 21; j++) {
-				int idx1 = rnd.nextInt(16);
-				int idx2 = rnd.nextInt(16);
+			for (int j = 0; j < NUM_NEW_POPULATION/2; j++) {
+				int idx1 = rnd.nextInt(NUM_POPULATION);
+				int idx2 = rnd.nextInt(NUM_POPULATION);
 				Strategy[] newStrats = population[idx1].crossover(population[idx2]);
-				newStrats[0].mutate();
-				newStrats[1].mutate();
-				newStrats[0].normalize();
-				newStrats[1].normalize();
-				newPopulation.add(newStrats[0]);
-				newPopulation.add(newStrats[1]);
+				for (int k = 0; k < 2; k++) {
+					newStrats[k].mutate();
+					newStrats[k].normalize();
+					newPopulation.add(newStrats[k]);
+					newPopulation.add(newStrats[k]);
+				}
 			}
 
 			//Selection
