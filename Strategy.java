@@ -30,7 +30,7 @@ public class Strategy {
 		FeaturesScore fs = new FeaturesScore(state);
 		double totalScore = 0.0;
 		
-		for (int i = 0; i < fs.getNumberOfFeatures(); ++i){
+		for (int i = 0; i < fs.getNumberOfFeatures(); i++){
 			totalScore += weights[i] * fs.getScore(i);
 		}
 		
