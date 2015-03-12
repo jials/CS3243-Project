@@ -2,21 +2,21 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+
 public class GA extends Learning {
   Strategy[] population;
 	private static int NUM_POPULATION = 16;
 	private static int NUM_NEW_POPULATION = 42;
 
-
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public GA() {
 		population = new Strategy[NUM_POPULATION];
 		if (!load()) {
 			Random rnd = new Random();
 			for (int i = 0; i < NUM_POPULATION; i++) {
-				double[] weights = new double[21];	
+				double[] weights = new double[21];
 				for (int j = 0; j < 21; j++) {
 					weights[j] = rnd.nextInt();
 				}
@@ -52,7 +52,7 @@ public class GA extends Learning {
 	 */
 	public void run(int iterations) {
 		Random rnd = new Random();
-    for (int i = 0; i < iterations; i++) {
+		for (int i = 0; i < iterations; i++) {
 			List<Strategy> newPopulation = new ArrayList<Strategy>();
 			for (int j = 0; j < NUM_NEW_POPULATION/2; j++) {
 				int idx1 = rnd.nextInt(NUM_POPULATION);
