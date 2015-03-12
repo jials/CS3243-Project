@@ -40,7 +40,7 @@ public class FeaturesScore {
 	//Check from above
 	public int checkColHeight(int col) {
 		int count = 0;
-		while (grids[ROWS - count][col] == 0) {
+		while (grids[ROWS - count][col] == 0 && count <= 19) {
 			count++;
 		}
 		return ROWS - count;
