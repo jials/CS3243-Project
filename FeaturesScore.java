@@ -20,13 +20,13 @@ public class FeaturesScore {
 		
 		//The next 9 are adjHeight
 		for (int i = 10; i < 10 + COLS - 1; i++) {
-			scores[i] = checkDiffAdjColHeights(i);
+			scores[i] = checkDiffAdjColHeights(i - 10);
 		}
 		
 		//max col height
-		scores[20] = checkMaxColHeight();
+		scores[19] = checkMaxColHeight();
 		
-		scores[21] = checkNumWallHoles();
+		scores[20] = checkNumWallHoles();
 	}
 	
 	public double getScore(int index) {
@@ -40,7 +40,7 @@ public class FeaturesScore {
 	//Check from above
 	public int checkColHeight(int col) {
 		int count = 0;
-		while (grids[ROWS - count][col] == 0 && count <= 19) {
+		while (count <= 19 && grids[ROWS - count][col] == 0) {
 			count++;
 		}
 		return ROWS - count;
