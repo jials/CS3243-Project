@@ -161,7 +161,6 @@ public class State {
 	//constructor
 	public State() {
 		nextPiece = randomPiece();
-
 	}
 	
 	//random integer, returns 0-6
