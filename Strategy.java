@@ -1,9 +1,20 @@
 import java.util.Arrays;
 
+/**
+ * Strategy
+ * 
+ * Takes in the set of weights of all the available features.
+ * Calculates required values with regards to the current set of
+ * weights, such as the total score obtained.
+ */
 public class Strategy {
+	//Stores set of weights for all the available features
 	private double[] weights;
 	
-	/*Constructor*/
+	/**
+	 * Constructor
+	 * @param w: set of weights for all the available features
+	 */
 	public Strategy(double[] w){
 		weights = Arrays.copyOf(w, w.length);
 	}
