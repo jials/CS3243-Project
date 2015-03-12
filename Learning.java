@@ -42,7 +42,13 @@ abstract class Learning {
 		return move;
 	}
 
+	/**
+	 * Store the result of the current run
+	 */
 	protected abstract void store();
 
+	/**
+	 * Load the result of previous run
+	 */
 	protected abstract void load();
 }
