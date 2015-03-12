@@ -15,7 +15,6 @@ public class GA extends Learning {
 		population = new Strategy[NUM_POPULATION];
 		load();
 	}
-	
 
 	class ScoredStrategy implements Comparable<ScoredStrategy> {
 		private Strategy s;
@@ -25,7 +24,7 @@ public class GA extends Learning {
 			this.s = s;
 			this.score = score;
 		}
-		
+
 		public int compareTo(ScoredStrategy s) {
 			if (s.score < this.score) {
 				return -1;
@@ -37,7 +36,7 @@ public class GA extends Learning {
 		}
 	}
 	/**
-	 * Run some iterations of the genetic algorithm to refine the population. 
+	 * Run some iterations of the genetic algorithm to refine the population.
 	 * @param iterations The number of iterations.
 	 */
 	public void run(int iterations) {
@@ -71,12 +70,10 @@ public class GA extends Learning {
 			}
 		}
 	}
-	
+
 	public void store() {
-		
 	}
-	
+
 	public void load() {
-		
 	}
 }
