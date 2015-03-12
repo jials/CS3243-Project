@@ -1,7 +1,7 @@
 
-public class featuresScore {
+public class FeaturesScore {
 	public static final int COLS = 10;
-	public static final int ROWS = 21;
+	public static final int ROWS = 19;
 	
 	//currently 21 features. To be increased in the future
 	private final int numFeatures = 21;
@@ -10,7 +10,7 @@ public class featuresScore {
 	
 	private int[] colHeights = new int[COLS];
 	
-	public featuresScore(State s) {
+	public FeaturesScore(State s) {
 		grids = s.getField();
 		
 		//First 10 are colHeight
@@ -40,10 +40,10 @@ public class featuresScore {
 	//Check from above
 	public int checkColHeight(int col) {
 		int count = 0;
-		while (grids[count][col] != 0) {
+		while (grids[ROWS - count][col] == 0) {
 			count++;
 		}
-		return count;
+		return ROWS - count;
 	}
 	
 	//Check absolute difference between adjacent column heights. This method compares grid[column] with grid[column+1]
@@ -66,7 +66,7 @@ public class featuresScore {
 		int count = 0;
 		for (int i = 0; i < COLS; i++) {
 			int height = colHeights[i];
-			for (int j = ROWS - height - 1; j < 0; j--) {
+			for (int j = height - 1; j >= 0; j--) {
 				if (grids[j][i] == 0)
 					count++;
 			}
