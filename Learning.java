@@ -2,6 +2,7 @@ abstract class Learning {
 
 	/**
 	 * Run a game of tetris using the passed strategy
+	 *
 	 * @param strategy
 	 * @return the number of rows cleared
 	 */
@@ -13,6 +14,15 @@ abstract class Learning {
 		return s.getRowsCleared();
 	}
 
+	/**
+	 * Run simulations for all the next legal move and pick the one that will
+	 * give the best possible score according to the strategy
+	 *
+	 * @param s the current state of the game =
+	 * @param legalMoves
+	 * @param strategy the strategy being used
+	 * @return the index of the "best" move (supposedly...)
+	 */
 	private int pickMove(State s, int[][] legalMoves, Strategy strategy) {
 		int move = 0;
 		double maxScore = -1;
