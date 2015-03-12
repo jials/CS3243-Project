@@ -7,7 +7,7 @@ public class PlayerSkeleton {
 	public int pickMove(State s, int[][] legalMoves) {
 		Game g = new Game(s);
 		double[] w = getValueOfWeight();
-		//Strategy strategy = new Strategy(w);
+		Strategy strategy = new Strategy(w);
 		
 		int move = 0;
 		double maxScore = -1;
@@ -16,7 +16,7 @@ public class PlayerSkeleton {
 		for(int i = 0; i < legalMoves.length; i++) {
 			simulation = new Game(g);
 			simulation.makeMove(i);
-			double score = simulation.getRowsCleared() /*+ strategy.calculate(simulation)*/;
+			double score = simulation.getRowsCleared() + strategy.calculate(simulation);
 			
 			if(score > maxScore) {
 				maxScore = score;
