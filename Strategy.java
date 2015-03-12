@@ -36,5 +36,20 @@ public class Strategy {
 		
 		return totalScore;
 	}
+
+  //TODO: Implement
+  // Returns the two strategies created from crossovers
+  public Strategy[] crossover(Strategy s) {
+    return null;
+  }
 	
+  //TODO: Implement
+  // Normalize this strategy.
+  public void normalize() {
+  }
+
+  //TODO: Implement
+  // Mutate this strategy.
+  public void mutate() {
+  }
 }
