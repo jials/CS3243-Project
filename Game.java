@@ -1,9 +1,6 @@
 import java.awt.Color;
 
-
-
-
-public class State {
+public class Game {
 	public static final int COLS = 10;
 	public static final int ROWS = 21;
 	public static final int N_PIECES = 7;
@@ -159,8 +156,40 @@ public class State {
 	
 	
 	//constructor
-	public State() {
+	public Game() {
 		nextPiece = randomPiece();
+	}
+	
+	public Game(Game g) {
+		this.field = new int[ROWS][COLS];
+		for(int i = 0; i < ROWS; i++) {
+			for(int j = 0; j < COLS; j++) {
+				this.field[i][j] = g.getField()[i][j];
+			}
+		}
+		this.top = new int[COLS];
+		for(int i = 0; i < COLS; i++) {
+			this.top[i] = g.getTop()[i];
+		}
+		this.nextPiece = g.getNextPiece();
+		this.turn = g.getTurnNumber();
+		this.cleared = g.getRowsCleared();
+	}
+	
+	public Game(State g) {
+		this.field = new int[ROWS][COLS];
+		for(int i = 0; i < ROWS; i++) {
+			for(int j = 0; j < COLS; j++) {
+				this.field[i][j] = g.getField()[i][j];
+			}
+		}
+		this.top = new int[COLS];
+		for(int i = 0; i < COLS; i++) {
+			this.top[i] = g.getTop()[i];
+		}
+		this.nextPiece = g.getNextPiece();
+		this.turn = g.getTurnNumber();
+		this.cleared = g.getRowsCleared();
 	}
 	
 	//random integer, returns 0-6
@@ -314,5 +343,3 @@ public class State {
 	
 
 }
-
-
