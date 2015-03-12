@@ -1,5 +1,6 @@
 
 public class GA extends Learning {
+  Strategy[] population;
 	/**
 	 * Constructor
 	 */
