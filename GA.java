@@ -56,7 +56,6 @@ public class GA extends Learning {
 		JsonParser parse = new JsonParser();
 		
 		JsonArray jsonArray = parse.parse(json).getAsJsonArray();
-//		gson.registerTypeAdapter(Strategy.class, new CustomDeserializer());
 
 		for (int i = 0; i < jsonArray.size(); i++) {
 			Strategy output = gson.create().fromJson(jsonArray.get(i), Strategy.class);
