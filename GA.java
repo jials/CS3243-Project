@@ -110,23 +110,28 @@ public class GA extends Learning {
 			return false;
 		}
 
-		Scanner fileReader = new Scanner(gaScore);
-		String json = "";
+        try {
+            Scanner fileReader = new Scanner(gaScore);
+            String json = "";
 
-		while(fileReader.hasNextLine()) {
-			json += fileReader.nextLine();
-		}
+            while(fileReader.hasNextLine()) {
+                json += fileReader.nextLine();
+            }
 
-		GsonBuilder gson = new GsonBuilder();
-		JsonParser parse = new JsonParser();
+            GsonBuilder gson = new GsonBuilder();
+            JsonParser parse = new JsonParser();
 
-		JsonArray jsonArray = parse.parse(json).getAsJsonArray();
+            JsonArray jsonArray = parse.parse(json).getAsJsonArray();
 
-		for (int i = 0; i < jsonArray.size(); i++) {
-			Strategy output = gson.create().fromJson(jsonArray.get(i), Strategy.class);
-			population[i] = output;
-		}
-		return true;
+            for (int i = 0; i < jsonArray.size(); i++) {
+                Strategy output = gson.create().fromJson(jsonArray.get(i), Strategy.class);
+                population[i] = output;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
 	}
 
     public static void main(String[] args) {
