@@ -89,6 +89,7 @@ public class GA extends Learning {
 				population[i] = scoredList.get(i).s;
 			}
 		}
+        store();
 	}
 
 	public void store() {
