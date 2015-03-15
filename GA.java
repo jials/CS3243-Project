@@ -28,7 +28,7 @@ public class GA extends Learning {
 			for (int i = 0; i < NUM_POPULATION; i++) {
 				double[] weights = new double[21];
 				for (int j = 0; j < 21; j++) {
-					weights[j] = rnd.nextInt();
+					weights[j] = rnd.nextInt(1000);
 				}
 				Strategy s = new Strategy(weights);
 				s.normalize();
