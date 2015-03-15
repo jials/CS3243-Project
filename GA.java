@@ -28,10 +28,9 @@ public class GA extends Learning {
 			for (int i = 0; i < NUM_POPULATION; i++) {
 				double[] weights = new double[21];
 				for (int j = 0; j < 21; j++) {
-					weights[j] = rnd.nextInt(1000);
+					weights[j] = rnd.nextDouble() * (-5);
 				}
 				Strategy s = new Strategy(weights);
-				s.normalize();
 				population[i] = s;
 			}
 		}
@@ -70,7 +69,6 @@ public class GA extends Learning {
 				Strategy[] newStrats = population[idx1].crossover(population[idx2]);
 				for (int k = 0; k < 2; k++) {
 					newStrats[k].mutate();
-					newStrats[k].normalize();
 					newPopulation.add(newStrats[k]);
 				}
 			}
