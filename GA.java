@@ -99,6 +99,7 @@ public class GA extends Learning {
 			GsonBuilder gson = new GsonBuilder();
 			String json = gson.create().toJson(population);
 			fileWriter.write(json);
+            fileWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
