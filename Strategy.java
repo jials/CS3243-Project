@@ -64,10 +64,10 @@ public class Strategy {
 			newWeights2[i] = this.getWeight(i);
 			newWeights1[i] = s.getWeight(i);
 		}
-		
-		newStrategies[1] = new Strategy(newWeights1);
-		newStrategies[2] = new Strategy(newWeights2);
-		
+
+		newStrategies[0] = new Strategy(newWeights1);
+		newStrategies[1] = new Strategy(newWeights2);
+
 		return newStrategies;
 	}
 
