@@ -87,4 +87,13 @@ public class GA extends Learning {
 	public boolean load() {
 		return false;
 	}
+
+    public static void main(String[] args) {
+        int iterations = 1;
+        if (args.length > 0) {
+            iterations = Integer.parseInt(args[0]);
+        }
+        GA ga = new GA();
+        ga.run(iterations);
+    }
 }
