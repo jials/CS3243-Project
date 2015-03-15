@@ -10,7 +10,7 @@ public class PlayerSkeleton {
 		Strategy strategy = new Strategy(w);
 		
 		int move = 0;
-		double maxScore = -1;
+		double maxScore = Double.NEGATIVE_INFINITY;
 		Game simulation;
 		
 		for(int i = 0; i < legalMoves.length; i++) {
