@@ -1,6 +1,6 @@
 
 public class PlayerSkeleton {
-	
+
 	static final int NO_FEATURES = 21;
 
 	//implement this function to have a working system
@@ -8,25 +8,25 @@ public class PlayerSkeleton {
 		Game g = new Game(s);
 		double[] w = getValueOfWeight();
 		Strategy strategy = new Strategy(w);
-		
+
 		int move = 0;
 		double maxScore = Double.NEGATIVE_INFINITY;
 		Game simulation;
-		
+
 		for(int i = 0; i < legalMoves.length; i++) {
 			simulation = new Game(g);
 			simulation.makeMove(i);
 			double score = simulation.getRowsCleared() + strategy.calculate(simulation);
-			
+
 			if(score > maxScore) {
 				maxScore = score;
 				move = i;
 			}
 		}
-		
+
 		return move;
 	}
-	
+
 	public static double[] getValueOfWeight() {
 		double[] w = new double[NO_FEATURES];
 		for(int i = 0; i < NO_FEATURES; i++) {
@@ -34,7 +34,7 @@ public class PlayerSkeleton {
 		}
 		return w;
 	}
-	
+
 	public static void main(String[] args) {
 		State s = new State();
 		new TFrame(s);
@@ -51,5 +51,5 @@ public class PlayerSkeleton {
 		}
 		System.out.println("You have completed "+s.getRowsCleared()+" rows.");
 	}
-	
+
 }

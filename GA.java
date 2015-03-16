@@ -87,7 +87,7 @@ public class GA extends Learning {
 				population[i] = scoredList.get(i).s;
 			}
 		}
-        store();
+		store();
 	}
 
 	public void store() {
@@ -97,7 +97,7 @@ public class GA extends Learning {
 			GsonBuilder gson = new GsonBuilder();
 			String json = gson.create().toJson(population);
 			fileWriter.write(json);
-            fileWriter.close();
+			fileWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,36 +110,36 @@ public class GA extends Learning {
 			return false;
 		}
 
-        try {
-            Scanner fileReader = new Scanner(gaScore);
-            String json = "";
+		try {
+			Scanner fileReader = new Scanner(gaScore);
+			String json = "";
 
-            while(fileReader.hasNextLine()) {
-                json += fileReader.nextLine();
-            }
+			while(fileReader.hasNextLine()) {
+				json += fileReader.nextLine();
+			}
 
-            GsonBuilder gson = new GsonBuilder();
-            JsonParser parse = new JsonParser();
+			GsonBuilder gson = new GsonBuilder();
+			JsonParser parse = new JsonParser();
 
-            JsonArray jsonArray = parse.parse(json).getAsJsonArray();
+			JsonArray jsonArray = parse.parse(json).getAsJsonArray();
 
-            for (int i = 0; i < jsonArray.size(); i++) {
-                Strategy output = gson.create().fromJson(jsonArray.get(i), Strategy.class);
-                population[i] = output;
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+			for (int i = 0; i < jsonArray.size(); i++) {
+				Strategy output = gson.create().fromJson(jsonArray.get(i), Strategy.class);
+				population[i] = output;
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
-    public static void main(String[] args) {
-        int iterations = 1;
-        if (args.length > 0) {
-            iterations = Integer.parseInt(args[0]);
-        }
-        GA ga = new GA();
-        ga.run(iterations);
-    }
+	public static void main(String[] args) {
+		int iterations = 1;
+		if (args.length > 0) {
+			iterations = Integer.parseInt(args[0]);
+		}
+		GA ga = new GA();
+		ga.run(iterations);
+	}
 }

@@ -35,7 +35,7 @@ abstract class Learning {
 			simulation = new Game(s);
 			simulation.makeMove(i);
 			double score = simulation.getRowsCleared()
-					+ strategy.calculate(simulation);
+				+ strategy.calculate(simulation);
 
 			if (score > maxScore) {
 				maxScore = score;
