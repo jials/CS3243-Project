@@ -62,6 +62,7 @@ public class GA extends Learning {
 	public void run(int iterations) {
 		Random rnd = new Random();
 		for (int i = 0; i < iterations; i++) {
+			System.out.println("Running iteration " + (i + 1));
 			List<Strategy> newPopulation = new ArrayList<Strategy>();
 			for (int j = 0; j < NUM_NEW_POPULATION/2; j++) {
 				int idx1 = rnd.nextInt(NUM_POPULATION);
@@ -76,18 +77,24 @@ public class GA extends Learning {
 			//Selection
 			List<ScoredStrategy> scoredList = new ArrayList<ScoredStrategy>();
 			for (Strategy s : population) {
-				scoredList.add(new ScoredStrategy(s, getScore(s)));
+				ScoredStrategy scoredStrategy = new ScoredStrategy(s, getScore(s));
+				System.out.println(scoredStrategy.score);
+				scoredList.add(scoredStrategy);
 			}
 			for (Strategy s : newPopulation) {
-				scoredList.add(new ScoredStrategy(s, getScore(s)));
+				ScoredStrategy scoredStrategy = new ScoredStrategy(s, getScore(s));
+				System.out.println(scoredStrategy.score);
+				scoredList.add(scoredStrategy);
 			}
 
 			Collections.sort(scoredList);
-			for (int j = 0; j < 16; j++) {
-				population[i] = scoredList.get(i).s;
+			for (int j = 0; j < NUM_POPULATION; j++) {
+				population[j] = scoredList.get(j).s;
 			}
+
+			System.out.println("Best run:" + scoredList.get(0).score);
+			store();
 		}
-		store();
 	}
 
 	public void store() {
