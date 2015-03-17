@@ -87,5 +87,11 @@ public class Strategy {
 	// TODO: Implement
 	// Mutate this strategy.
 	public void mutate() {
+		Random rnd = new Random();
+		for (int i = 0; i < weights.length; i++) {
+			if (rnd.nextDouble() < 0.006) {
+				weights[i] = rnd.nextDouble() * (-5);
+			}
+		}
 	}
 }

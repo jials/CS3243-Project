@@ -31,10 +31,7 @@ public class PlayerSkeleton {
 	}
 
 	public static double[] getValueOfWeight() {
-		double[] w = new double[NO_FEATURES];
-		for(int i = 0; i < NO_FEATURES; i++) {
-			w[i] = 1;
-		}
+double[] w = {-2.4314434705091954,-4.170703742915406,-1.6855483652653476,-4.467492185839834,-4.0978279947846055,-3.2473988612810585,-4.0832401679564,-3.8201310809251425,-3.3881843924828496,-2.277064870995924,-1.5011607717865298,-0.8738490523768699,-2.247996199862927,-1.4706440374186214,-2.6241133511334653,-1.1212505515403364,-2.393098215478936,-1.2625024690510434,-0.8660445626984148,-1.193076058175646,-4.938496429385502};
 		return w;
 	}
 
@@ -47,7 +44,7 @@ public class PlayerSkeleton {
 			s.draw();
 			s.drawNext(0,0);
 			try {
-				Thread.sleep(300);
+				Thread.sleep(0);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

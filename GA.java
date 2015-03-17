@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.*;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -15,8 +16,8 @@ import java.util.Collections;
 
 public class GA extends Learning {
 	Strategy[] population;
-	private static int NUM_POPULATION = 16;
-	private static int NUM_NEW_POPULATION = 42;
+	private static int NUM_POPULATION = 200;
+	private static int NUM_NEW_POPULATION = 400;
 
 	/**
 	 * Constructor.
@@ -74,17 +75,31 @@ public class GA extends Learning {
 				}
 			}
 
+			ExecutorService service = Executors.newFixedThreadPool(10);
+
+
 			//Selection
 			List<ScoredStrategy> scoredList = new ArrayList<ScoredStrategy>();
+			List<Future<Integer> > scores = new ArrayList<Future<Integer> >();
 			for (Strategy s : population) {
-				ScoredStrategy scoredStrategy = new ScoredStrategy(s, getScore(s));
-				System.out.println(scoredStrategy.score);
+				ScoredStrategy scoredStrategy = new ScoredStrategy(s, 0);
+				scores.add(service.submit(new Simulator(s)));
 				scoredList.add(scoredStrategy);
 			}
 			for (Strategy s : newPopulation) {
-				ScoredStrategy scoredStrategy = new ScoredStrategy(s, getScore(s));
-				System.out.println(scoredStrategy.score);
+				ScoredStrategy scoredStrategy = new ScoredStrategy(s, 0);
+				scores.add(service.submit(new Simulator(s)));
 				scoredList.add(scoredStrategy);
+			}
+
+			service.shutdown();
+			try {
+			service.awaitTermination(10000, TimeUnit.DAYS);
+			for (int j = 0; j < scores.size(); j++) {
+				scoredList.get(j).score = scores.get(j).get();
+			}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 
 			Collections.sort(scoredList);
