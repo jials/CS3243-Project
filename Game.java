@@ -82,6 +82,7 @@ public class Game {
 	};
 
 	//initialize legalMoves
+	private void initializeLegalMoves()
 	{
 		//for each piece type
 		for(int i = 0; i < N_PIECES; i++) {
@@ -104,7 +105,6 @@ public class Game {
 				}
 			}
 		}
-
 	}
 
 
@@ -158,6 +158,7 @@ public class Game {
 	//constructor
 	public Game() {
 		nextPiece = randomPiece();
+		initializeLegalMoves();
 	}
 
 	public Game(Game g) {
@@ -173,7 +174,8 @@ public class Game {
 		}
 		this.nextPiece = g.getNextPiece();
 		this.turn = g.getTurnNumber();
-		this.cleared = g.getRowsCleared();
+		this.cleared = 0;
+		initializeLegalMoves();
 	}
 
 	public Game(State g) {
@@ -189,7 +191,8 @@ public class Game {
 		}
 		this.nextPiece = g.getNextPiece();
 		this.turn = g.getTurnNumber();
-		this.cleared = g.getRowsCleared();
+		this.cleared = 0;
+		initializeLegalMoves();
 	}
 
 	//random integer, returns 0-6
@@ -200,7 +203,7 @@ public class Game {
 
 
 
-	//gives legal moves for 
+	//gives legal moves for
 	public int[][] legalMoves() {
 		return legalMoves[nextPiece];
 	}
