@@ -27,8 +27,8 @@ public class GA extends Learning {
 		if (!load()) {
 			Random rnd = new Random();
 			for (int i = 0; i < NUM_POPULATION; i++) {
-				double[] weights = new double[21];
-				for (int j = 0; j < 21; j++) {
+				double[] weights = new double[FeaturesScore.NUM_FEATURES];
+				for (int j = 0; j < FeaturesScore.NUM_FEATURES; j++) {
 					weights[j] = rnd.nextDouble() * (-5);
 				}
 				Strategy s = new Strategy(weights);

@@ -11,6 +11,8 @@ import java.util.Random;
 public class Strategy {
 	// Stores set of weights for all the available features
 	private double[] weights;
+	public static final double RANGE_BEGIN = -5;
+	public static final double RANGE_END = 5;
 
 	/**
 	 * Constructor
