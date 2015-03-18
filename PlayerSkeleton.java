@@ -15,11 +15,7 @@ public class PlayerSkeleton {
 
 		for(int i = 0; i < legalMoves.length; i++) {
 			simulation = new Game(g);
-			simulation.makeMove(i);
-			if (simulation.hasLost()) {
-				continue;
-			}
-			double score = simulation.getRowsCleared() + strategy.calculate(simulation);
+			double score = strategy.calculate(simulation, i);
 
 			if(score > maxScore) {
 				maxScore = score;

@@ -33,12 +33,7 @@ abstract class Learning {
 
 		for (int i = 0; i < legalMoves.length; i++) {
 			simulation = new Game(s);
-			simulation.makeMove(i);
-			if (simulation.hasLost()) {
-				continue;
-			}
-			double score = simulation.getRowsCleared()
-				+ strategy.calculate(simulation);
+			double score = strategy.calculate(simulation, i);
 
 			if (score > maxScore) {
 				maxScore = score;

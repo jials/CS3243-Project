@@ -4,14 +4,16 @@ public class FeaturesScore {
 	public static final int ROWS = 19;
 
 	//currently 21 features. To be increased in the future
-	public static final int NUM_FEATURES = 21;
+	public static final int NUM_FEATURES = 22;
 	private double[] scores = new double[NUM_FEATURES];
 	private int[][] grids;
 
 	private int[] colHeights = new int[COLS];
 
-	public FeaturesScore(Game s) {
-		grids = s.getField();
+	public FeaturesScore(Game s, int move) {
+		Game g = new Game(s);
+		g.makeMove(move);
+		grids = g.getField();
 
 		//First 10 are colHeight
 		for (int i = 0; i < COLS; i++) {
@@ -27,6 +29,8 @@ public class FeaturesScore {
 		scores[19] = checkMaxColHeight();
 
 		scores[20] = checkNumWallHoles();
+
+		scores[21] = g.hasLost()?1:0;
 	}
 
 	public double getScore(int index) {
