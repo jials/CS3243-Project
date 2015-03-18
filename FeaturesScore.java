@@ -32,7 +32,6 @@ public class FeaturesScore {
 
 		scores[21] = g.hasLost()?1:0;
 	}
-
 	public double getScore(int index) {
 		return scores[index];
 	}
