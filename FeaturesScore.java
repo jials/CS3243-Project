@@ -4,8 +4,8 @@ public class FeaturesScore {
 	public static final int ROWS = 19;
 
 	//currently 21 features. To be increased in the future
-	private final int numFeatures = 21;
-	private double[] scores = new double[numFeatures];
+	public static final int NUM_FEATURES = 21;
+	private double[] scores = new double[NUM_FEATURES];
 	private int[][] grids;
 
 	private int[] colHeights = new int[COLS];
@@ -34,7 +34,7 @@ public class FeaturesScore {
 	}
 
 	public int getNumberOfFeatures() {
-		return numFeatures;
+		return NUM_FEATURES;
 	}
 
 	//Check from above
