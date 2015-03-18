@@ -32,7 +32,7 @@ public class Game {
 
 
 	//all legal moves - first index is piece type - then a list of 2-length arrays
-	protected static int[][][] legalMoves = new int[N_PIECES][][];
+	protected int[][][] legalMoves = new int[N_PIECES][][];
 
 	//indices for legalMoves
 	public static final int ORIENT = 0;
