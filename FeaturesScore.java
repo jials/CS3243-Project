@@ -4,7 +4,7 @@ public class FeaturesScore {
 	public static final int ROWS = 19;
 
 	//currently 21 features. To be increased in the future
-	public static final int NUM_FEATURES = 22;
+	public static final int NUM_FEATURES = 21;
 	private double[] scores = new double[NUM_FEATURES];
 	private int[][] grids;
 
@@ -12,25 +12,106 @@ public class FeaturesScore {
 
 	public FeaturesScore(Game s, int move) {
 		Game g = new Game(s);
+		int[][] legalMoves = s.legalMoves();
+		int[] pairMove = legalMoves[move];
+
+		int nextPiece = g.getNextPiece();
+		int orient = pairMove[0];
+		int slot = pairMove[1];
+		int pieceHeight = g.getpHeight()[nextPiece][orient];
+
+
+		//height if the first column makes contact
+		int height = g.getTop()[slot]-g.getpBottom()[nextPiece][orient][0];
+		//for each column beyond the first in the piece
+		for(int c = 1; c < g.getpWidth()[nextPiece][orient];c++) {
+			height = Math.max(height,g.getTop()[slot+c]-g.getpBottom()[nextPiece][orient][c]);
+		}
+
+		scores[0] = (height + pieceHeight)/2.0;
+
 		g.makeMove(move);
 		grids = g.getField();
 
-		//First 10 are colHeight
+		scores[1] = g.getRowsCleared();
+
+		scores[2] = 0;
+		for (int i = 0; i < ROWS; i++) {
+			if (grids[i][0] == 0) scores[2]++;
+			if (grids[i][COLS - 1] == 0) scores[2]++;
+			for (int j = 0; j < COLS - 1; j++) {
+				if (grids[i][j] == 0 ^ grids[i][j+1] == 0) {
+					scores[2]++;
+				}
+			}
+		}
+
+		scores[3] = 0;
+		for (int j = 0; j < COLS; j++) {
+			if (grids[0][j] == 0) {
+				++scores[3];
+			}
+			for (int i = 0; i < ROWS - 1; i++) {
+				if (grids[i][j] == 0 ^ grids[i+1][j] == 0) {
+					scores[3]++;
+				}
+			}
+		}
+
+		scores[4] = 0;
 		for (int i = 0; i < COLS; i++) {
-			scores[i] = colHeights[i] = checkColHeight(i);
+			boolean exist = false;
+			for (int j = ROWS - 1; j >= 0; --j) {
+				if (exist && grids[j][i] == 0) {
+					++scores[4];
+				}
+				if (grids[j][i] != 0) {
+					exist = true;
+				}
+			}
 		}
 
-		//The next 9 are adjHeight
-		for (int i = 10; i < 10 + COLS - 1; i++) {
-			scores[i] = checkDiffAdjColHeights(i - 10);
+		scores[5] = 0;
+		for (int j = 1; j < COLS - 1; j++) {
+			for (int i = 0; i < ROWS; i++) {
+				if (grids[i][j-1] != 0 && grids[i][j] == 0 && grids[i][j+1] != 0) {
+					++scores[5];
+					for (int k = i - 1; k >= 0; --k) {
+						if (grids[k][j] == 0) {
+							++scores[5];
+						} else {
+							break;
+						}
+					}
+				}
+			}
 		}
 
-		//max col height
-		scores[19] = checkMaxColHeight();
+		for (int i = 0; i < ROWS; i++) {
+			if (grids[i][0] == 0 && grids[i][1] != 0) {
+				++scores[5];
+				for (int k = i - 1; k >= 0; --k) {
+					if (grids[k][0] == 0) {
+						++scores[5];
+					} else {
+						break;
+					}
+				}
+			}
+		}
 
-		scores[20] = checkNumWallHoles();
-
-		scores[21] = g.hasLost()?1:0;
+		for (int i = 0; i < ROWS; i++) {
+			if (grids[i][COLS - 1] == 0 && grids[i][COLS - 2] != 0) {
+				++scores[5];
+				for (int k = i - 1; k >= 0; --k) {
+					if (grids[k][COLS - 1] == 0) {
+						++scores[5];
+					} else {
+						break;
+					}
+				}
+			}
+		}
 	}
 	public double getScore(int index) {
 		return scores[index];

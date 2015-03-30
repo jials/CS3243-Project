@@ -107,7 +107,6 @@ public class Game {
 		}
 	}
 
-
 	public int[][] getField() {
 		return field;
 	}
@@ -318,7 +317,7 @@ public class Game {
 
 	}
 
-	public static final Color brickCol = Color.gray; 
+	public static final Color brickCol = Color.gray;
 
 	private void drawBrick(int c, int r) {
 		label.filledRectangleLL(c, r, 1, 1, brickCol);

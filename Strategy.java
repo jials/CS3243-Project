@@ -30,7 +30,6 @@ public class Strategy {
 		for (int i = 0; i < w.length; i++) {
 			w[i] = rnd.nextDouble() * (RANGE_END - RANGE_BEGIN) + RANGE_BEGIN;
 		}
-		w[21] = -1000000000;
 		return new Strategy(w);
 	}
 
