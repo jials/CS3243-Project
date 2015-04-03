@@ -1,7 +1,7 @@
 
 public class FeaturesScore {
 	public static final int COLS = 10;
-	public static final int ROWS = 19;
+	public static final int ROWS = 20;
 
 	//currently 21 features. To be increased in the future
 	public static final int NUM_FEATURES = 6;
