@@ -25,7 +25,6 @@ public class GA extends Learning {
 	public GA() {
 		population = new Strategy[NUM_POPULATION];
 		if (!load()) {
-			Random rnd = new Random();
 			for (int i = 0; i < NUM_POPULATION; i++) {
 				population[i] = Strategy.createRandom();
 			}
@@ -51,6 +50,7 @@ public class GA extends Learning {
 			}
 		}
 	}
+
 	/**
 	 * Run some iterations of the genetic algorithm to refine the population.
 	 * @param iterations The number of iterations.
@@ -116,7 +116,6 @@ public class GA extends Learning {
 			fileWriter.write(json);
 			fileWriter.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -144,6 +143,7 @@ public class GA extends Learning {
 				Strategy output = gson.create().fromJson(jsonArray.get(i), Strategy.class);
 				population[i] = output;
 			}
+			fileReader.close();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

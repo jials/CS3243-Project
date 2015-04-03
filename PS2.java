@@ -1,9 +1,8 @@
-import java.util.Scanner;
 
 public class PS2 {
 
 	static final int NO_FEATURES = 21;
-//implement this function to have a working system 
+//implement this function to have a working system
 	public int pickMove(State s, int[][] legalMoves) {
 		if (s.getRowsCleared() % 10000 == 0) {
 			System.out.println(s.getRowsCleared());
