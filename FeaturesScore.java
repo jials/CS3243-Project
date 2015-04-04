@@ -3,82 +3,48 @@ public class FeaturesScore {
 	public static final int COLS = 10;
 	public static final int ROWS = 20;
 
-	//currently 21 features. To be increased in the future
 	public static final int NUM_FEATURES = 6;
 	private double[] scores = new double[NUM_FEATURES];
-	private int[][] grids;
-
-	private int[] colHeights = new int[COLS];
 
 	public FeaturesScore(Game s, int move) {
 		Game g = new Game(s);
-		int[][] legalMoves = s.legalMoves();
-		int[] pairMove = legalMoves[move];
-
-		int nextPiece = g.getNextPiece();
-		int orient = pairMove[0];
-		int slot = pairMove[1];
-		int pieceHeight = g.getpHeight()[nextPiece][orient];
-
-
-		//height if the first column makes contact
-		int height = g.getTop()[slot]-g.getpBottom()[nextPiece][orient][0];
-		//for each column beyond the first in the piece
-		for(int c = 1; c < g.getpWidth()[nextPiece][orient];c++) {
-			height = Math.max(height,g.getTop()[slot+c]-g.getpBottom()[nextPiece][orient][c]);
-		}
-
-		scores[0] = (height + pieceHeight)/2.0;
-
 		g.makeMove(move);
-		grids = g.getField();
+		int[][] grids = g.getField();
 
-		scores[1] = g.getRowsCleared();
+		scores[0] = getLandingHeight(s, move);
 
-		scores[2] = 0;
-		for (int i = 0; i < ROWS; i++) {
-			if (grids[i][0] == 0) scores[2]++;
-			if (grids[i][COLS - 1] == 0) scores[2]++;
-			for (int j = 0; j < COLS - 1; j++) {
-				if (grids[i][j] == 0 ^ grids[i][j+1] == 0) {
-					scores[2]++;
-				}
-			}
-		}
+		scores[1] = getRowsClearedAfterMove(s);
 
-		scores[3] = 0;
-		for (int j = 0; j < COLS; j++) {
-			if (grids[0][j] == 0) {
-				++scores[3];
-			}
-			for (int i = 0; i < ROWS - 1; i++) {
-				if (grids[i][j] == 0 ^ grids[i+1][j] == 0) {
-					scores[3]++;
-				}
-			}
-		}
+		scores[2] = getRowTransitions(grids);
 
-		scores[4] = 0;
-		for (int i = 0; i < COLS; i++) {
-			boolean exist = false;
-			for (int j = ROWS - 1; j >= 0; --j) {
-				if (exist && grids[j][i] == 0) {
-					++scores[4];
-				}
-				if (grids[j][i] != 0) {
-					exist = true;
-				}
-			}
-		}
+		scores[3] = getColTransitions(grids);
 
-		scores[5] = 0;
+		scores[4] = getNumberOfHoles(grids);
+
+		scores[5] = getWellSums(grids);
+	}
+
+	public double getScore(int index) {
+		return scores[index];
+	}
+
+	public int getNumberOfFeatures() {
+		return NUM_FEATURES;
+	}
+
+	/**
+	 * @param grids
+	 * @return
+	 */
+	private int getWellSums(int[][] grids) {
+		int count = 0;
 		for (int j = 1; j < COLS - 1; j++) {
 			for (int i = 0; i < ROWS; i++) {
 				if (grids[i][j-1] != 0 && grids[i][j] == 0 && grids[i][j+1] != 0) {
-					++scores[5];
+					++count;
 					for (int k = i - 1; k >= 0; --k) {
 						if (grids[k][j] == 0) {
-							++scores[5];
+							++count;
 						} else {
 							break;
 						}
@@ -89,10 +55,10 @@ public class FeaturesScore {
 
 		for (int i = 0; i < ROWS; i++) {
 			if (grids[i][0] == 0 && grids[i][1] != 0) {
-				++scores[5];
+				++count;
 				for (int k = i - 1; k >= 0; --k) {
 					if (grids[k][0] == 0) {
-						++scores[5];
+						++count;
 					} else {
 						break;
 					}
@@ -102,27 +68,112 @@ public class FeaturesScore {
 
 		for (int i = 0; i < ROWS; i++) {
 			if (grids[i][COLS - 1] == 0 && grids[i][COLS - 2] != 0) {
-				++scores[5];
+				++count;
 				for (int k = i - 1; k >= 0; --k) {
 					if (grids[k][COLS - 1] == 0) {
-						++scores[5];
+						++count;
 					} else {
 						break;
 					}
 				}
 			}
 		}
-	}
-	public double getScore(int index) {
-		return scores[index];
+
+		return count;
 	}
 
-	public int getNumberOfFeatures() {
-		return NUM_FEATURES;
+	/**
+	 * @param grids
+	 * @return
+	 */
+	private int getNumberOfHoles(int[][] grids) {
+		int count = 0;
+		for (int i = 0; i < COLS; i++) {
+			boolean filled = false;
+			for (int j = ROWS - 1; j >= 0; --j) {
+				if (grids[j][i] != 0) {
+					filled = true;
+				}
+				if (filled && grids[j][i] == 0) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * @param grids
+	 * @return
+	 */
+	private int getColTransitions(int[][] grids) {
+		int count = 0;
+		for (int j = 0; j < COLS; j++) {
+			if (grids[0][j] == 0) {
+				count++;
+			}
+			for (int i = 0; i < ROWS - 1; i++) {
+				if (grids[i][j] == 0 ^ grids[i+1][j] == 0) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * @return
+	 *
+	 */
+	private int getRowTransitions(int[][] grids) {
+		int count = 0;
+		for (int i = 0; i < ROWS; i++) {
+			if (grids[i][0] == 0) count++;
+			if (grids[i][COLS - 1] == 0) count++;
+			for (int j = 0; j < COLS - 1; j++) {
+				if (grids[i][j] == 0 ^ grids[i][j+1] == 0) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * @param s
+	 * @param move
+	 * @return
+	 */
+	private int getRowsClearedAfterMove(Game g) {
+		return g.getRowsCleared();
+	}
+
+	/**
+	 * @param s
+	 * @param move
+	 */
+	private double getLandingHeight(Game s, int move) {
+		int[] pairMove = s.legalMoves()[move];
+
+		int nextPiece = s.getNextPiece();
+		int orient = pairMove[0];
+		int slot = pairMove[1];
+		int pieceHeight = Game.getpHeight()[nextPiece][orient];
+
+		//height if the first column makes contact
+		int height = s.getTop()[slot] - Game.getpBottom()[nextPiece][orient][0];
+
+		//for each column beyond the first in the piece
+		for(int c = 1; c < Game.getpWidth()[nextPiece][orient];c++) {
+			height = Math.max(height,s.getTop()[slot+c] -
+						Game.getpBottom()[nextPiece][orient][c]);
+		}
+
+		return (height + pieceHeight)/2.0;
 	}
 
 	//Check from above
-	public int checkColHeight(int col) {
+	private int checkColHeight(int col, int[][] grids, int[] colHeights) {
 		int count = 0;
 		while (count <= 19 && grids[ROWS - count][col] == 0) {
 			count++;
@@ -131,12 +182,12 @@ public class FeaturesScore {
 	}
 
 	//Check absolute difference between adjacent column heights. This method compares grid[column] with grid[column+1]
-	public int checkDiffAdjColHeights(int col) {
+	private int checkDiffAdjColHeights(int col, int[] colHeights) {
 		int result = colHeights[col] - colHeights[col + 1];
 		return result > 0 ? result: -result; //return absolute value
 	}
 
-	public int checkMaxColHeight() {
+	private int checkMaxColHeight(int[] colHeights) {
 		int max = colHeights[0];
 		for (int i = 1; i < COLS; i++) {
 			if (max < colHeights[i])
@@ -146,7 +197,7 @@ public class FeaturesScore {
 	}
 
 	//find the height of the column. Any 0's below the top of the column are considered holes
-	public int checkNumWallHoles() {
+	private int checkNumWallHoles(int[][] grids, int[] colHeights) {
 		int count = 0;
 		for (int i = 0; i < COLS; i++) {
 			int height = colHeights[i];
