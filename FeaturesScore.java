@@ -13,7 +13,7 @@ public class FeaturesScore {
 
 		scores[0] = getLandingHeight(s, move);
 
-		scores[1] = getRowsClearedAfterMove(s);
+		scores[1] = getRowsClearedAfterMove(g);
 
 		scores[2] = getRowTransitions(grids);
 

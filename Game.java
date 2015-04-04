@@ -82,8 +82,7 @@ public class Game {
 	};
 
 	//initialize legalMoves
-	private void initializeLegalMoves()
-	{
+	private void initializeLegalMoves() {
 		//for each piece type
 		for(int i = 0; i < N_PIECES; i++) {
 			//figure number of legal moves
