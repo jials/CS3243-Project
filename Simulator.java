@@ -1,4 +1,10 @@
-abstract class Learning {
+import java.util.concurrent.Callable;
+class Simulator implements Callable<Integer> {
+
+	Strategy strategy;
+	public Simulator(Strategy strategy) {
+		this.strategy = strategy;
+	}
 
 	/**
 	 * Run a game of tetris using the passed strategy
@@ -7,11 +13,16 @@ abstract class Learning {
 	 * @return the number of rows cleared
 	 */
 	protected int getScore(Strategy strategy) {
-		State s = new State();
-		while (!s.hasLost()) {
-			s.makeMove(pickMove(s, s.legalMoves(), strategy));
+		int res = 0;
+		for (int i = 0; i < 5; i++) {
+			State s = new State();
+			while (!s.hasLost()) {
+				s.makeMove(pickMove(s, s.legalMoves(), strategy));
+			}
+			res += s.getRowsCleared();
 		}
-		return s.getRowsCleared();
+		System.out.println(res);
+		return res;
 	}
 
 	/**
@@ -43,13 +54,7 @@ abstract class Learning {
 		return move;
 	}
 
-	/**
-	 * Store the result of the current run
-	 */
-	protected abstract void store();
-
-	/**
-	 * Load the result of previous run
-	 */
-	protected abstract boolean load();
+	public Integer call() {
+		return getScore(strategy);
+	}
 }

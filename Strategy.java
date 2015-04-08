@@ -24,6 +24,15 @@ public class Strategy {
 		weights = Arrays.copyOf(w, w.length);
 	}
 
+	public static Strategy createRandom() {
+		double[] w = new double[FeaturesScore.NUM_FEATURES];
+		Random rnd = new Random();
+		for (int i = 0; i < w.length; i++) {
+			w[i] = rnd.nextDouble() * (RANGE_END - RANGE_BEGIN) + RANGE_BEGIN;
+		}
+		return new Strategy(w);
+	}
+
 	/**
 	 * Calculates the total score of the strategy which has a particular set of
 	 * weights for all the available features.
@@ -31,8 +40,8 @@ public class Strategy {
 	 * @param state
 	 * @return sigma(weight[i] * score of feature[i])
 	 */
-	public double calculate(Game state) {
-		FeaturesScore fs = new FeaturesScore(state);
+	public double calculate(Game state, int move) {
+		FeaturesScore fs = new FeaturesScore(state, move);
 		double totalScore = 0.0;
 
 		for (int i = 0; i < fs.getNumberOfFeatures(); i++) {
@@ -89,5 +98,11 @@ public class Strategy {
 	// TODO: Implement
 	// Mutate this strategy.
 	public void mutate() {
+		Random rnd = new Random();
+		for (int i = 0; i < weights.length; i++) {
+			if (rnd.nextDouble() < 0.006) {
+				weights[i] = rnd.nextDouble() * (-5);
+			}
+		}
 	}
 }

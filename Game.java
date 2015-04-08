@@ -82,7 +82,7 @@ public class Game {
 	};
 
 	//initialize legalMoves
-	{
+	private void initializeLegalMoves() {
 		//for each piece type
 		for(int i = 0; i < N_PIECES; i++) {
 			//figure number of legal moves
@@ -104,9 +104,7 @@ public class Game {
 				}
 			}
 		}
-
 	}
-
 
 	public int[][] getField() {
 		return field;
@@ -158,6 +156,7 @@ public class Game {
 	//constructor
 	public Game() {
 		nextPiece = randomPiece();
+		initializeLegalMoves();
 	}
 
 	public Game(Game g) {
@@ -173,7 +172,8 @@ public class Game {
 		}
 		this.nextPiece = g.getNextPiece();
 		this.turn = g.getTurnNumber();
-		this.cleared = g.getRowsCleared();
+		this.cleared = 0;
+		initializeLegalMoves();
 	}
 
 	public Game(State g) {
@@ -189,7 +189,8 @@ public class Game {
 		}
 		this.nextPiece = g.getNextPiece();
 		this.turn = g.getTurnNumber();
-		this.cleared = g.getRowsCleared();
+		this.cleared = 0;
+		initializeLegalMoves();
 	}
 
 	//random integer, returns 0-6
@@ -200,7 +201,7 @@ public class Game {
 
 
 
-	//gives legal moves for 
+	//gives legal moves for
 	public int[][] legalMoves() {
 		return legalMoves[nextPiece];
 	}
@@ -315,7 +316,7 @@ public class Game {
 
 	}
 
-	public static final Color brickCol = Color.gray; 
+	public static final Color brickCol = Color.gray;
 
 	private void drawBrick(int c, int r) {
 		label.filledRectangleLL(c, r, 1, 1, brickCol);
