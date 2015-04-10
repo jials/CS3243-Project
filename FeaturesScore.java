@@ -173,7 +173,7 @@ public class FeaturesScore {
 	}
 
 	//Check from above
-	private int checkColHeight(int col, int[][] grids, int[] colHeights) {
+	private int checkColHeight(int col, int[][] grids) {
 		int count = 0;
 		while (count <= 19 && grids[ROWS - count][col] == 0) {
 			count++;
