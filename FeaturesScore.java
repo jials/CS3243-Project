@@ -172,6 +172,88 @@ public class FeaturesScore {
 		return (height + pieceHeight)/2.0;
 	}
 
+	private double getMeanHoleDepth(int[][] grid) {
+		// Just following the formula given in the paper
+		return (double)getSumHoleDepth(grid) / getAdjacentColumnHoles(grid);
+	}
+
+	/**
+	 * Just following the paper, basically sums the number of holes per column
+	 * @param g
+	 * @return
+	 */
+	private int getAdjacentColumnHoles(int[][] grid) {
+		int count = 0;
+		for (int i = 1; i < Game.COLS; i++) {
+			for (int j = 0; j < Game.ROWS; j++) {
+				if (grid[i][j] > 0 && grid[i][j-1] == 0) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * Calculate the sum of the max depth of the holes in every columns
+	 * in the game
+	 * @param g
+	 * @return
+	 */
+	private int getSumHoleDepth(int[][] grid) {
+		int count = 0;
+		for (int i = 0; i < Game.COLS; i++) {
+			for (int j = 0; j < Game.ROWS; j++) {
+				if (grid[i][j] == 0 && grid[i][j+1] > 0) {
+					count += getHoleDepth(grid, i, j);
+				}
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * Calculate the max depth of the holes in a column
+	 * @param col
+	 * @param startRow
+	 * @return
+	 */
+	private int getHoleDepth(int[][] grid, int col, int startRow) {
+		int depth = checkColHeight(col, grid) - startRow;
+		return depth;
+	}
+
+	/**
+	 * Calculate the number of rows with hole(s) in it
+	 * @param g
+	 * @return
+	 */
+	private int getRowWithHoles(int[][] grid) {
+		int[] colHeights = new int[Game.COLS];
+		for (int i = 0; i < colHeights.length; i++) {
+			colHeights[i] = checkColHeight(i, grid);
+		}
+		int maxColHeight = checkMaxColHeight(colHeights);
+
+		int count = 0;
+		for (int i = 0; i < maxColHeight; i++) {
+			for (int j = 0; j < Game.COLS; j++) {
+				// The row got hole if the empty cell is not at the top of the
+				// column
+				if (grid[i][j] == 0 && colHeights[j] > i) {
+					count++;
+					break;  // straight away proceed to the next row
+				}
+			}
+		}
+		return count;
+	}
+
+	private int getVarNumberOfHoles(Game s, int[][] grid) {
+		int[][] previousGrid = s.getField();
+		return getNumberOfHoles(grid) - getNumberOfHoles(previousGrid);
+	}
+
 	//Check from above
 	private int checkColHeight(int col, int[][] grids) {
 		int count = 0;
