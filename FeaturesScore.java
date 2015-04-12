@@ -1,4 +1,3 @@
-
 public class FeaturesScore {
 	public static final int COLS = 10;
 	public static final int ROWS = 20;
@@ -207,5 +206,66 @@ public class FeaturesScore {
 			}
 		}
 		return count;
+	}
+	
+	/**
+	 * 
+	 * @param grids
+	 * @return
+	 */
+	private int cellTransitions(int[][] grids) {
+		int sum = 0;
+		
+		for (int j = 0; j < ROWS; j++) {
+			for (int i = 0; i < COLS; i++) {
+				if (i > 0 && grids[i][j] == 0 && grids[i-1][j] == 1)
+					sum++;
+				
+				if (i < 19 && grids[i][j] == 0 && grids[i+1][j] == 1) 
+					sum++;
+			
+				if (j > 0 && grids[i][j] == 0 && grids[i][j-1] == 1) 
+					sum++;
+				
+				if (j < 19 && grids[i][j] == 0 && grids[i][j+1] == 1)
+					sum++;
+			}
+		}
+		
+		return sum;
+	}
+	
+	/**
+	 * 
+	 * @param grids
+	 * @return
+	 */
+	private int heightWeightedCells(int[][] grids) {
+		int sum = 0;
+		for (int j = 0; j < ROWS; j++) {
+			for (int i = 0; i < COLS; i++) {
+				if (grids[i][j] == 1) {
+					sum += j;
+				}
+			}
+		}
+		return sum;
+	}
+	
+	/**
+	 * 
+	 * @param grids
+	 * @return
+	 */
+	private int fullCells(int[][] grids) {
+		int sum = 0;
+		for (int j = 0; j < ROWS; j++) {
+			for (int i = 0; i < COLS; i++) {
+				if (grids[i][j] == 1) {
+					sum++;
+				}
+			}
+		}
+		return sum;
 	}
 }
