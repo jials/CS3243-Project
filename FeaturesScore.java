@@ -208,4 +208,63 @@ public class FeaturesScore {
 		}
 		return count;
 	}
+	
+	private int getMaxWellDepth(int[][] grids){
+		int mx = 0, count;
+		
+		for (int j = 1; j < COLS - 1; j++) {
+			count = 0;
+			for (int i = 0; i < ROWS; i++) {
+				if (grids[i][j-1] != 0 && grids[i][j] == 0 && grids[i][j+1] != 0) {
+					++count;
+					for (int k = i - 1; k >= 0; --k) {
+						if (grids[k][j] == 0) {
+							++count;
+						} else {
+							break;
+						}
+					}
+				}
+			}
+			if (count > mx){
+				mx = count;
+			}
+		}
+		
+		count = 0;
+		for (int i = 0; i < ROWS; i++) {
+			if (grids[i][0] == 0 && grids[i][1] != 0) {
+				++count;
+				for (int k = i - 1; k >= 0; --k) {
+					if (grids[k][0] == 0) {
+						++count;
+					} else {
+						break;
+					}
+				}
+			}
+		}
+		if (count > mx){
+			mx = count;
+		}
+		
+		count = 0;
+		for (int i = 0; i < ROWS; i++) {
+			if (grids[i][COLS - 1] == 0 && grids[i][COLS - 2] != 0) {
+				++count;
+				for (int k = i - 1; k >= 0; --k) {
+					if (grids[k][COLS - 1] == 0) {
+						++count;
+					} else {
+						break;
+					}
+				}
+			}
+		}
+		if (count > mx){
+			mx = count;
+		}
+
+		return mx;
+	}
 }
