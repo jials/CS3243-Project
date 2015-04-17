@@ -1,9 +1,10 @@
+import java.util.Scanner;
 
 public class PS2 {
 
 	static final int NO_FEATURES = 21;
-//implement this function to have a working system
-	public int pickMove(State s, int[][] legalMoves) {
+//implement this function to have a working system 
+	public int pickMove(Game s, int[][] legalMoves) {
 		if (s.getRowsCleared() % 10000 == 0) {
 			System.out.println(s.getRowsCleared());
 		}
@@ -39,13 +40,19 @@ public class PS2 {
 	}
 
 	public static double[] getValueOfWeight() {
-		double[] w ={-4.197522873578402,0.7448884715097055,-1.2662380046953858,-4.445836416127795,-2.6618254253024256,-1.079545707988129};
+		double[] w =
+{-4.702950520298681,2.0706001287265066,-1.2880690173841591,-3.470570078386892,-4.431071922401414,-1.9959973216039515};
 		return w;
 	}
 
 	public static void main(String[] args) {
-		State s = new State();
-		PlayerSkeleton p = new PlayerSkeleton();
+		Game s;
+		if (args.length > 0) {
+			s = new Game(Long.parseLong(args[0]));
+		} else {
+			s = new Game();
+		}
+		PS2 p = new PS2();
 		while(!s.hasLost()) {
 			s.makeMove(p.pickMove(s,s.legalMoves()));
 		}

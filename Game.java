@@ -1,17 +1,12 @@
 import java.awt.Color;
+import java.util.Random;
 
 public class Game {
 	public static final int COLS = 10;
 	public static final int ROWS = 21;
 	public static final int N_PIECES = 7;
 
-
-
 	public boolean lost = false;
-
-
-
-
 
 	public TLabel label;
 
@@ -29,6 +24,7 @@ public class Game {
 	//number of next piece
 	protected int nextPiece;
 
+	private Random rndGenerator;
 
 
 	//all legal moves - first index is piece type - then a list of 2-length arrays
@@ -155,11 +151,20 @@ public class Game {
 
 	//constructor
 	public Game() {
+		rndGenerator = new Random();
 		nextPiece = randomPiece();
 		initializeLegalMoves();
 	}
 
+	public Game(long seed) {
+		rndGenerator = new Random(seed);
+		nextPiece = randomPiece();
+		initializeLegalMoves();
+	}
+
+
 	public Game(Game g) {
+		this.rndGenerator = new Random();
 		this.field = new int[ROWS][COLS];
 		for(int i = 0; i < ROWS; i++) {
 			for(int j = 0; j < COLS; j++) {
@@ -195,7 +200,7 @@ public class Game {
 
 	//random integer, returns 0-6
 	private int randomPiece() {
-		return (int)(Math.random()*N_PIECES);
+		return rndGenerator.nextInt(7);
 	}
 
 
