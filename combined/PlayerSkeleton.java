@@ -1,22 +1,18 @@
-
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.concurrent.*;
+import java.util.List;
 import java.util.Random;
-import java.util.concurrent.Callable;
+import java.util.Scanner;
 
 import java.awt.Color;
-import java.util.Random;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.concurrent.*;
 
-import java.util.Random;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
 public class PlayerSkeleton {
 
 	static final int NO_FEATURES = 6;
@@ -45,18 +41,18 @@ public class PlayerSkeleton {
 			}
 		}
 
-		/*try {
-			Scanner sc = new Scanner(System.in);
-			int tmp = sc.nextInt();
-		}catch(Exception e) {
-		}*/
-
 		return move;
 	}
 
 	public static double[] getValueOfWeight() {
-		double[] w =
-{-4.702950520298681,2.0706001287265066,-1.2880690173841591,-3.470570078386892,-4.431071922401414,-1.9959973216039515};
+		double[] w = {
+			-4.702950520298681,
+			2.0706001287265066,
+			-1.2880690173841591,
+			-3.470570078386892,
+			-4.431071922401414,
+			-1.9959973216039515
+		};
 		return w;
 	}
 
@@ -733,7 +729,7 @@ class GA extends Learning {
 
 			service.shutdown();
 			try {
-			service.awaitTermination(10000, TimeUnit.DAYS);
+				service.awaitTermination(10000, TimeUnit.DAYS);
 			for (int j = 0; j < scores.size(); j++) {
 				scoredList.get(j).score = scores.get(j).get();
 			}
