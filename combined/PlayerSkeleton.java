@@ -182,6 +182,10 @@ class Strategy {
 	}
 }
 
+/**
+ * Runs a simulation of a tetris game
+ * Returns the number of rows cleared upon completion
+ */
 class Simulator implements Callable<Integer> {
 
 	Strategy strategy;
@@ -247,6 +251,9 @@ class Simulator implements Callable<Integer> {
 	}
 }
 
+/**
+ * An abstract class for a learning algorithm
+ */
 abstract class Learning {
 
 	/**
@@ -303,7 +310,12 @@ abstract class Learning {
 	protected abstract boolean load();
 }
 
-
+/**
+ * Same as State class, except:
+ * 
+ * - without the GUI
+ * - may be seeded
+ */
 class Game {
 	public static final int COLS = 10;
 	public static final int ROWS = 21;
@@ -653,7 +665,9 @@ class Game {
 
 }
 
-
+/**
+ * Genetic Algorithm class
+ */
 class GA extends Learning {
 	Strategy[] population;
 	private static int NUM_POPULATION = 16;
@@ -747,6 +761,16 @@ class GA extends Learning {
 		}
 	}
 
+	/**************************************************
+	 * Codes on store and load are commented out
+	 * because it requires an external library
+	 * which can be obtained from:
+	 * https://github.com/google/gson
+	 *************************************************/
+
+	/**
+	 * Stores the population generated from the last iteration
+	 */
 	public void store() {
 /*		File gaScore = new File("gaScore.json");
 		try {
@@ -760,6 +784,9 @@ class GA extends Learning {
 		}*/
 	}
 
+	/**
+	 * Loads the population generated from the last iteration
+	 */
 	public boolean load() {
 /*		File gaScore = new File("gaScore.json");
 		if(!gaScore.exists()) {
@@ -802,7 +829,9 @@ class GA extends Learning {
 	}
 }
 
-
+/**
+ * Calculates the score of the features of a state (unweighted)
+ */
 class FeaturesScore {
 	public static final int COLS = 10;
 	public static final int ROWS = 20;
