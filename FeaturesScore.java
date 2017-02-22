@@ -187,6 +187,7 @@ public class FeaturesScore {
 		return result > 0 ? result: -result; //return absolute value
 	}
 
+	//getMaxHeight
 	private int checkMaxColHeight(int[] colHeights) {
 		int max = colHeights[0];
 		for (int i = 1; i < COLS; i++) {
@@ -208,4 +209,75 @@ public class FeaturesScore {
 		}
 		return count;
 	}
+	
+	// ----------- Heights ------------- //
+	
+	/**
+	 * getMeanHeight(g.getTop());
+	 * getMinHeight(g.getTop());
+	 * 
+	 * These methods can be made faster
+	 * by saving the previously computed max, mean, and min height to variables, 
+	 * and passing it to the methods (slightly edit the parameters)
+	 * 
+	 * getMaxMeanHeight(g.getTop());
+	 * getMeanMinHeight(g.getTop());
+	 * getMaxHeightDiff(g.getTop());
+	 * getVariationMaxHeight(s.getTop(), g.getTop());
+	 * getVariationOfHeightDiff(s.getTop(), g.getTop());
+	 * getVariationMeanHeight(s.getTop(), g.getTop());
+	 */
+	
+	private double getMeanHeight(int[] colHeights) {
+		int sum = 0;
+		for(int i = 0; i < COLS; i++) {
+			sum += colHeights[i];
+		}
+		return (double)sum / COLS;
+	}
+	
+	private int getMinHeight(int[] colHeights) {
+		int min = colHeights[0];
+		for(int i = 1; i < COLS; i++) {
+			if (min > colHeights[i]) {
+				min = colHeights[i];
+			}
+		}
+		return min;
+	}
+	
+	private double getMaxMeanHeight(int[] colHeights) {
+		return checkMaxColHeight(colHeights) - getMeanHeight(colHeights);
+	}
+	
+	private double getMeanMinHeight(int[] colHeights) {
+		return getMeanHeight(colHeights) - getMinHeight(colHeights);
+	}
+	
+	private int getMaxHeightDiff(int[] colHeights) {
+		return checkMaxColHeight(colHeights) - getMinHeight(colHeights);
+	}
+	 
+	private int getVariationMaxHeight(int[] prevHeights, int[] curHeights) {
+		int prevMax = checkMaxColHeight(prevHeights);
+		int curMax = checkMaxColHeight(curHeights);
+		
+		return Math.abs(curMax - prevMax);
+	}
+
+	//variation of height differences
+	private int getVariationOfHeightDiff(int[] prevHeights, int[] curHeights) {
+		int prevDiff = getMaxHeightDiff(prevHeights);
+		int curDiff = getMaxHeightDiff(curHeights);
+		
+		return Math.abs(curDiff - prevDiff);
+	}
+
+	private double getVariationMeanHeight(int[] prevHeights, int[] curHeights) {
+		double prevMean = getMeanHeight(prevHeights);
+		double curMean = getMeanHeight(curHeights);
+		
+		return Math.abs(curMean - prevMean);
+	}
+	
 }
